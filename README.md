@@ -10,8 +10,6 @@ To install the library, run:
 go get github.com/Bibi40k/gologger
 ```
 
-Replace `github.com/Bibi40k/gologger` with the actual path to your repository.
-
 ## Usage
 
 To use the Color Logger in your project, import the package and create an instance of the `Logger` struct. You can then use the `Info`, `Warning`, and `Error` methods to log messages.
@@ -22,7 +20,7 @@ To use the Color Logger in your project, import the package and create an instan
 package main
 
 import (
-    "github.com/Bibi40k/gologger/src"
+    "github.com/Bibi40k/gologger"
 )
 
 func main() {
