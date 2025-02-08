@@ -20,25 +20,22 @@ var logLevels = map[string]string{
 
 // Log a message with a given level
 func Log(level, message string) {
-	if color, exists := logLevels[level]; exists {
-		logMessage(level, message, color)
-	} else {
-		logMessage(level, message, "Reset")
-	}
+	logMessage(level, message, getColor(level))
 }
 
 // Log a message with a given level and save it to a file
 func LogAndSave(level, message, filepath string) {
-	if color, exists := logLevels[level]; exists {
-		logAndSave(level, message, filepath, color)
-	} else {
-		logAndSave(level, message, filepath, "Reset")
-	}
+	logAndSave(level, message, filepath, getColor(level))
 }
 
 // Info log
 func Info(message string) {
 	Log("INFO", message)
+}
+
+// Infof log with formatted message
+func Infof(format string, args ...interface{}) {
+	Log("INFO", fmt.Sprintf(format, args...))
 }
 
 // InfoAndSave logs an informational message and saves it to a file
@@ -51,6 +48,11 @@ func Debug(message string) {
 	Log("DEBUG", message)
 }
 
+// Debugf log with formatted message
+func Debugf(format string, args ...interface{}) {
+	Log("DEBUG", fmt.Sprintf(format, args...))
+}
+
 // DebugAndSave logs a debug message and saves it to a file
 func DebugAndSave(message, filepath string) {
 	LogAndSave("DEBUG", message, filepath)
@@ -58,19 +60,27 @@ func DebugAndSave(message, filepath string) {
 
 // Error log
 func Error(message string) {
-	_, file, line, _ := runtime.Caller(1)
-	Log("ERROR", fmt.Sprintf("%s:%d %s", file, line, message))
+	Log("ERROR", formatMessageWithCaller(message))
+}
+
+// Errorf log with formatted message
+func Errorf(format string, args ...interface{}) {
+	Log("ERROR", formatMessageWithCaller(fmt.Sprintf(format, args...)))
 }
 
 // ErrorAndSave logs an error message and saves it to a file
 func ErrorAndSave(message, filepath string) {
-	_, file, line, _ := runtime.Caller(1)
-	LogAndSave("ERROR", fmt.Sprintf("%s:%d %s", file, line, message), filepath)
+	LogAndSave("ERROR", formatMessageWithCaller(message), filepath)
 }
 
 // Warning log
 func Warning(message string) {
 	Log("WARNING", message)
+}
+
+// Warningf log with formatted message
+func Warningf(format string, args ...interface{}) {
+	Log("WARNING", fmt.Sprintf(format, args...))
 }
 
 // WarningAndSave logs a warning message and saves it to a file
@@ -80,19 +90,27 @@ func WarningAndSave(message, filepath string) {
 
 // Fatal log
 func Fatal(message string) {
-	_, file, line, _ := runtime.Caller(1)
-	log.Fatalf("[%s] %s:%d %s", "FATAL", file, line, colorize(message, "Magenta"))
+	Log("FATAL", formatMessageWithCaller(message))
+}
+
+// Fatalf log with formatted message
+func Fatalf(format string, args ...interface{}) {
+	Log("FATAL", formatMessageWithCaller(fmt.Sprintf(format, args...)))
 }
 
 // FatalAndSave logs a fatal message and saves it to a file
 func FatalAndSave(message, filepath string) {
-	_, file, line, _ := runtime.Caller(1)
-	LogAndSave("FATAL", fmt.Sprintf("%s:%d %s", file, line, message), filepath)
+	LogAndSave("FATAL", formatMessageWithCaller(message), filepath)
 }
 
 // Success log
 func Success(message string) {
 	Log("SUCCESS", message)
+}
+
+// Successf log with formatted message
+func Successf(format string, args ...interface{}) {
+	Log("SUCCESS", fmt.Sprintf(format, args...))
 }
 
 // SuccessAndSave logs a success message and saves it to a file
@@ -135,6 +153,20 @@ func logAndSave(level, message, filepath, color string) {
 	// Log message with color in terminal and without color in file
 	terminalLogger.Printf("[%s] %s", level, colorize(message, color))
 	fileLogger.Printf("[%s] %s", level, message)
+}
+
+// getColor returns the color for a given log level
+func getColor(level string) string {
+	if color, exists := logLevels[level]; exists {
+		return color
+	}
+	return "Reset"
+}
+
+// formatMessageWithCaller formats a message with the caller's file and line number
+func formatMessageWithCaller(message string) string {
+	_, file, line, _ := runtime.Caller(2)
+	return fmt.Sprintf("%s:%d %s", file, line, message)
 }
 
 // colorize adds color to log messages based on the level
