@@ -24,11 +24,19 @@ import (
 )
 
 func main() {
-    logger := gologger.NewLogger()
+    gologger.Info("This is an info message.")
+    gologger.Warning("This is a warning message.")
+    gologger.Error("This is an error message.")
+    gologger.Debug("This is a debug message.")
+    gologger.Fatal("This is a fatal message.")
+    gologger.Success("This is a success message.")
 
-    logger.Info("This is an info message.")
-    logger.Warning("This is a warning message.")
-    logger.Error("This is an error message.")
+    gologger.InfoAndSave("This is an info message saved to a file.", "log/info.log")
+    gologger.WarningAndSave("This is a warning message saved to a file.", "log/warning.log")
+    gologger.ErrorAndSave("This is an error message saved to a file.", "log/error.log")
+    gologger.DebugAndSave("This is a debug message saved to a file.", "log/debug.log")
+    gologger.FatalAndSave("This is a fatal message saved to a file.", "log/fatal.log")
+    gologger.SuccessAndSave("This is a success message saved to a file.", "log/success.log")
 }
 ```
 
