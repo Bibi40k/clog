@@ -1,55 +1,81 @@
-package gologger
+package glog
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"os"
 	fp "path/filepath"
 	"runtime"
-	"time"
 )
+
+// Log levels and their corresponding colors
+var logLevels = map[string]string{
+	"INFO":    "Blue",
+	"DEBUG":   "Cyan",
+	"ERROR":   "Red",
+	"WARNING": "Yellow",
+	"FATAL":   "Magenta",
+	"SUCCESS": "Green",
+}
+
+// Log a message with a given level
+func Log(level, message string) {
+	if color, exists := logLevels[level]; exists {
+		logMessage(level, message, color)
+	} else {
+		logMessage(level, message, "Reset")
+	}
+}
+
+// Log a message with a given level and save it to a file
+func LogAndSave(level, message, filepath string) {
+	if color, exists := logLevels[level]; exists {
+		logAndSave(level, message, filepath, color)
+	} else {
+		logAndSave(level, message, filepath, "Reset")
+	}
+}
 
 // Info log
 func Info(message string) {
-	logMessage("INFO", message, "Blue")
+	Log("INFO", message)
 }
 
 // InfoAndSave logs an informational message and saves it to a file
 func InfoAndSave(message, filepath string) {
-	logAndSave("INFO", message, filepath, "Blue")
+	LogAndSave("INFO", message, filepath)
 }
 
 // Debug log
 func Debug(message string) {
-	logMessage("DEBUG", message, "Cyan")
+	Log("DEBUG", message)
 }
 
 // DebugAndSave logs a debug message and saves it to a file
 func DebugAndSave(message, filepath string) {
-	logAndSave("DEBUG", message, filepath, "Cyan")
+	LogAndSave("DEBUG", message, filepath)
 }
 
 // Error log
 func Error(message string) {
 	_, file, line, _ := runtime.Caller(1)
-	logMessage("ERROR", fmt.Sprintf("%s:%d %s", file, line, message), "Red")
+	Log("ERROR", fmt.Sprintf("%s:%d %s", file, line, message))
 }
 
 // ErrorAndSave logs an error message and saves it to a file
 func ErrorAndSave(message, filepath string) {
 	_, file, line, _ := runtime.Caller(1)
-	logAndSave("ERROR", fmt.Sprintf("%s:%d %s", file, line, message), filepath, "Red")
+	LogAndSave("ERROR", fmt.Sprintf("%s:%d %s", file, line, message), filepath)
 }
 
 // Warning log
 func Warning(message string) {
-	logMessage("WARNING", message, "Yellow")
+	Log("WARNING", message)
 }
 
 // WarningAndSave logs a warning message and saves it to a file
 func WarningAndSave(message, filepath string) {
-	logAndSave("WARNING", message, filepath, "Yellow")
+	LogAndSave("WARNING", message, filepath)
 }
 
 // Fatal log
@@ -61,23 +87,22 @@ func Fatal(message string) {
 // FatalAndSave logs a fatal message and saves it to a file
 func FatalAndSave(message, filepath string) {
 	_, file, line, _ := runtime.Caller(1)
-	logAndSave("FATAL", fmt.Sprintf("%s:%d %s", file, line, message), filepath, "Magenta")
+	LogAndSave("FATAL", fmt.Sprintf("%s:%d %s", file, line, message), filepath)
 }
 
 // Success log
 func Success(message string) {
-	logMessage("SUCCESS", message, "Green")
+	Log("SUCCESS", message)
 }
 
 // SuccessAndSave logs a success message and saves it to a file
 func SuccessAndSave(message, filepath string) {
-	logAndSave("SUCCESS", message, filepath, "Green")
+	LogAndSave("SUCCESS", message, filepath)
 }
 
 // logMessage logs a message with a given level
 func logMessage(level, message, color string) {
-	currentTime := time.Now().Format(time.RFC3339)
-	log.Printf("[%s] %s %s", level, currentTime, colorize(message, color))
+	log.Printf("[%s] %s", level, colorize(message, color))
 }
 
 // logAndSave logs a message with a given level and saves it to a file
@@ -102,18 +127,20 @@ func logAndSave(level, message, filepath, color string) {
 	}
 	defer file.Close()
 
-	// Create a logger that writes to both the file and the terminal
-	multiWriter := io.MultiWriter(os.Stdout, file)
-	logger := log.New(multiWriter, "", log.LstdFlags)
+	// Create a logger for the terminal
+	terminalLogger := log.New(os.Stdout, "", log.LstdFlags)
+	// Create a logger for the file
+	fileLogger := log.New(file, "", log.LstdFlags)
 
-	currentTime := time.Now().Format(time.RFC3339)
-	logger.Printf("[%s] %s %s", level, currentTime, colorize(message, color))
+	// Log message with color in terminal and without color in file
+	terminalLogger.Printf("[%s] %s", level, colorize(message, color))
+	fileLogger.Printf("[%s] %s", level, message)
 }
 
 // colorize adds color to log messages based on the level
-func colorize(message, level string) string {
-	var colorStart, colorEnd string
-	switch level {
+func colorize(message, color string) string {
+	var colorStart string
+	switch color {
 	case "Blue":
 		colorStart = "\033[34m"
 	case "Cyan":
@@ -129,6 +156,6 @@ func colorize(message, level string) string {
 	default:
 		colorStart = "\033[0m" // Reset
 	}
-	colorEnd = "\033[0m" // Reset
+	colorEnd := "\033[0m" // Reset
 	return fmt.Sprintf("%s%s%s", colorStart, message, colorEnd)
 }

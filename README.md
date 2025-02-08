@@ -1,14 +1,27 @@
-# Color Logger
+# GLog
 
-A simple Go library for logging messages with color-coded output.
+GLog is a simple logging library for Go that supports different log levels and colorized output in the terminal.
 
 ## Installation
 
 To install the library, run:
 
 ```sh
-go get github.com/Bibi40k/gologger
+go get github.com/Bibi40k/glog/glog
 ```
+
+## Log Levels
+
+The following log levels are supported:
+
+- INFO
+- DEBUG
+- ERROR
+- WARNING
+- FATAL
+- SUCCESS
+
+Each log level has a corresponding color when displayed in the terminal.
 
 ## Usage
 
@@ -20,24 +33,37 @@ To use the Color Logger in your project, import the package and create an instan
 package main
 
 import (
-    "github.com/Bibi40k/gologger"
+    "github.com/Bibi40k/glog"
 )
 
 func main() {
-    gologger.Info("This is an info message.")
-    gologger.Warning("This is a warning message.")
-    gologger.Error("This is an error message.")
-    gologger.Debug("This is a debug message.")
-    gologger.Fatal("This is a fatal message.")
-    gologger.Success("This is a success message.")
+    glog.Info("This is an informational message")
+    glog.Debug("This is a debug message")
+    glog.Error("This is an error message")
+    glog.Warning("This is a warning message")
+    glog.Fatal("This is a fatal message")
+    glog.Success("This is a success message")
 
-    gologger.InfoAndSave("This is an info message saved to a file.", "log/info.log")
-    gologger.WarningAndSave("This is a warning message saved to a file.", "log/warning.log")
-    gologger.ErrorAndSave("This is an error message saved to a file.", "log/error.log")
-    gologger.DebugAndSave("This is a debug message saved to a file.", "log/debug.log")
-    gologger.FatalAndSave("This is a fatal message saved to a file.", "log/fatal.log")
-    gologger.SuccessAndSave("This is a success message saved to a file.", "log/success.log")
+    glog.InfoAndSave("This is an informational message", "log/info.log")
+    glog.DebugAndSave("This is a debug message", "log/debug.log")
+    glog.ErrorAndSave("This is an error message", "log/error.log")
+    glog.WarningAndSave("This is a warning message", "log/warning.log")
+    glog.FatalAndSave("This is a fatal message", "log/fatal.log")
+    glog.SuccessAndSave("This is a success message", "log/success.log")
 }
+```
+
+### Logging Messages
+
+To log a message with a specific level, use the corresponding function:
+
+```go
+glog.Info("This is an informational message")
+glog.Debug("This is a debug message")
+glog.Error("This is an error message")
+glog.Warning("This is a warning message")
+glog.Fatal("This is a fatal message")
+glog.Success("This is a success message")
 ```
 
 ## Methods
