@@ -2,7 +2,9 @@ package gologger
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"os"
 	"runtime"
 	"time"
 )
@@ -44,6 +46,32 @@ func Fatal(message string) {
 // Success log
 func Success(message string) {
 	log.Printf("[%s] %s", "SUCCESS", colorize(message, "Green"))
+}
+
+// InfoAndSave logs an informational message and saves it to a file
+func InfoAndSave(message, filepath string) {
+	if filepath == "" {
+		Fatal("Filepath cannot be empty")
+	}
+
+	// Ensure the log directory exists
+	err := os.MkdirAll("log", os.ModePerm)
+	if err != nil {
+		Fatal(fmt.Sprintf("Failed to create log directory: %v", err))
+	}
+
+	// Open the log file
+	file, err := os.OpenFile(filepath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		Fatal(fmt.Sprintf("Failed to open log file: %v", err))
+	}
+	defer file.Close()
+
+	// Create a logger that writes to both the file and the terminal
+	multiWriter := io.MultiWriter(os.Stdout, file)
+	logger := log.New(multiWriter, "", log.LstdFlags)
+
+	logger.Printf("[%s] %s", "INFO", colorize(message, "Blue"))
 }
 
 // colorize adds color to log messages based on the level
