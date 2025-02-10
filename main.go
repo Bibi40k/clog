@@ -1,25 +1,25 @@
 package main
 
-import "github.com/Bibi40k/glog/glog"
+import "github.com/Bibi40k/clog/clog"
 
 func main() {
-	glog.Info("This is an info message.")
-	glog.Infof("This is a formatted info message: %s", "example")
-	glog.Warning("This is a warning message.")
-	glog.Warningf("This is a formatted warning message: %s", "example")
-	glog.Error("This is an error message.")
-	glog.Errorf("This is a formatted error message: %s", "example")
-	glog.Debug("This is a debug message.")
-	glog.Debugf("This is a formatted debug message: %s", "example")
-	// glog.Fatal("This is a fatal message.")
-	// glog.Fatalf("This is a formatted fatal message: %s", "example")
-	glog.Success("This is a success message.")
-	glog.Successf("This is a formatted success message: %s", "example")
+	clog.Info("This is an info message.")
+	clog.Infof("This is a formatted info message: %s", "example")
+	clog.Warning("This is a warning message.")
+	clog.Warningf("This is a formatted warning message: %s", "example")
+	clog.Error("This is an error message.")
+	clog.Errorf("This is a formatted error message: %s", "example")
+	clog.Debug("This is a debug message.")
+	clog.Debugf("This is a formatted debug message: %s", "example")
+	// clog.Fatal("This is a fatal message.")
+	// clog.Fatalf("This is a formatted fatal message: %s", "example")
+	clog.Success("This is a success message.")
+	clog.Successf("This is a formatted success message: %s", "example")
 
-	glog.InfoAndSave("This is an info message saved to a file.", "log/info.log")
-	glog.WarningAndSave("This is a warning message saved to a file.", "log/warning.log")
-	glog.ErrorAndSave("This is an error message saved to a file.", "log/error.log")
-	glog.DebugAndSave("This is a debug message saved to a file.", "log/debug.log")
-	// glog.FatalAndSave("This is a fatal message saved to a file.", "log/fatal.log")
-	glog.SuccessAndSave("This is a success message saved to a file.", "log/success.log")
+	clog.InfoAndSave("This is an info message saved to a file.", "log/info.log")
+	clog.WarningAndSave("This is a warning message saved to a file.", "log/warning.log")
+	clog.ErrorAndSave("This is an error message saved to a file.", "log/error.log")
+	clog.DebugAndSave("This is a debug message saved to a file.", "log/debug.log")
+	// clog.FatalAndSave("This is a fatal message saved to a file.", "log/fatal.log")
+	clog.SuccessAndSave("This is a success message saved to a file.", "log/success.log")
 }

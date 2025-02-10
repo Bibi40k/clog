@@ -1,13 +1,13 @@
-# Glog
+# Clog - color logging for Go
 
-Glog este un pachet de logging pentru Go care permite logarea mesajelor cu diferite niveluri și salvarea acestora într-un fișier.
+Clog este un pachet de logging pentru Go care permite logarea mesajelor cu diferite niveluri și salvarea acestora într-un fișier.
 
 ## Installation
 
 To install the library, run:
 
 ```sh
-go get github.com/Bibi40k/glog/glog
+go get github.com/Bibi40k/clog/clog
 ```
 
 ## Log Levels
@@ -33,33 +33,33 @@ To use the Color Logger in your project, import the package and create an instan
 package main
 
 import (
-    "glog"
+    "clog"
 )
 
 func main() {
-    glog.Info("This is an info message")
-    glog.Infof("This is a formatted info message: %s", "example")
-    glog.InfoAndSave("This is an info message saved to a file", "log.txt")
+    clog.Info("This is an info message")
+    clog.Infof("This is a formatted info message: %s", "example")
+    clog.InfoAndSave("This is an info message saved to a file", "log.txt")
 
-    glog.Debug("This is a debug message")
-    glog.Debugf("This is a formatted debug message: %s", "example")
-    glog.DebugAndSave("This is a debug message saved to a file", "log.txt")
+    clog.Debug("This is a debug message")
+    clog.Debugf("This is a formatted debug message: %s", "example")
+    clog.DebugAndSave("This is a debug message saved to a file", "log.txt")
 
-    glog.Error("This is an error message")
-    glog.Errorf("This is a formatted error message: %s", "example")
-    glog.ErrorAndSave("This is an error message saved to a file", "log.txt")
+    clog.Error("This is an error message")
+    clog.Errorf("This is a formatted error message: %s", "example")
+    clog.ErrorAndSave("This is an error message saved to a file", "log.txt")
 
-    glog.Warning("This is a warning message")
-    glog.Warningf("This is a formatted warning message: %s", "example")
-    glog.WarningAndSave("This is a warning message saved to a file", "log.txt")
+    clog.Warning("This is a warning message")
+    clog.Warningf("This is a formatted warning message: %s", "example")
+    clog.WarningAndSave("This is a warning message saved to a file", "log.txt")
 
-    glog.Fatal("This is a fatal message")
-    glog.Fatalf("This is a formatted fatal message: %s", "example")
-    glog.FatalAndSave("This is a fatal message saved to a file", "log.txt")
+    clog.Fatal("This is a fatal message")
+    clog.Fatalf("This is a formatted fatal message: %s", "example")
+    clog.FatalAndSave("This is a fatal message saved to a file", "log.txt")
 
-    glog.Success("This is a success message")
-    glog.Successf("This is a formatted success message: %s", "example")
-    glog.SuccessAndSave("This is a success message saved to a file", "log.txt")
+    clog.Success("This is a success message")
+    clog.Successf("This is a formatted success message: %s", "example")
+    clog.SuccessAndSave("This is a success message saved to a file", "log.txt")
 }
 ```
 
@@ -68,29 +68,29 @@ func main() {
 To log a message with a specific level, use the corresponding function:
 
 ```go
-glog.Info("This is an informational message")
-glog.Infof("This is a formatted info message: %s", "example")
-glog.InfoAndSave("This is an info message saved to a file", "log.txt")
+clog.Info("This is an informational message")
+clog.Infof("This is a formatted info message: %s", "example")
+clog.InfoAndSave("This is an info message saved to a file", "log.txt")
 
-glog.Debug("This is a debug message")
-glog.Debugf("This is a formatted debug message: %s", "example")
-glog.DebugAndSave("This is a debug message saved to a file", "log.txt")
+clog.Debug("This is a debug message")
+clog.Debugf("This is a formatted debug message: %s", "example")
+clog.DebugAndSave("This is a debug message saved to a file", "log.txt")
 
-glog.Error("This is an error message")
-glog.Errorf("This is a formatted error message: %s", "example")
-glog.ErrorAndSave("This is an error message saved to a file", "log.txt")
+clog.Error("This is an error message")
+clog.Errorf("This is a formatted error message: %s", "example")
+clog.ErrorAndSave("This is an error message saved to a file", "log.txt")
 
-glog.Warning("This is a warning message")
-glog.Warningf("This is a formatted warning message: %s", "example")
-glog.WarningAndSave("This is a warning message saved to a file", "log.txt")
+clog.Warning("This is a warning message")
+clog.Warningf("This is a formatted warning message: %s", "example")
+clog.WarningAndSave("This is a warning message saved to a file", "log.txt")
 
-glog.Fatal("This is a fatal message")
-glog.Fatalf("This is a formatted fatal message: %s", "example")
-glog.FatalAndSave("This is a fatal message saved to a file", "log.txt")
+clog.Fatal("This is a fatal message")
+clog.Fatalf("This is a formatted fatal message: %s", "example")
+clog.FatalAndSave("This is a fatal message saved to a file", "log.txt")
 
-glog.Success("This is a success message")
-glog.Successf("This is a formatted success message: %s", "example")
-glog.SuccessAndSave("This is a success message saved to a file", "log.txt")
+clog.Success("This is a success message")
+clog.Successf("This is a formatted success message: %s", "example")
+clog.SuccessAndSave("This is a success message saved to a file", "log.txt")
 ```
 
 ## Methods

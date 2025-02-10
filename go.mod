@@ -1,3 +1,3 @@
-module github.com/Bibi40k/glog
+module github.com/Bibi40k/clog
 
 go 1.23
